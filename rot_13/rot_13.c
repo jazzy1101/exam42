@@ -1,54 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   rot_13.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabae <dabae@student.42perpignan.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/31 13:42:32 by dabae             #+#    #+#             */
-/*   Updated: 2023/08/31 14:33:54 by dabae            ###   ########.fr       */
+/*   Created: 2023/08/31 14:49:04 by dabae             #+#    #+#             */
+/*   Updated: 2023/08/31 15:19:56 by dabae            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <unistd.h>
 
-int	str_len(char *s)
+int	main(int argc, char **argv)
 {
 	int	i;
 
 	i = 0;
-	while(s[i])
-		i++;
-	return (i);
-}
-		
-char	*ft_strdup(char *src)
-{
-	char	*s;
-	int	i;
-
-	s =(char *)malloc(sizeof(char) * (str_len(src) + 1));
-	
-	if (!s)
-		return (NULL);
-	else
+	if (argc == 2)
 	{
-		i = 0;
-		while(src[i])
+		while(argv[1][i])
 		{
-			s[i] = src[i];
+			if (argv[1][i] >= 'a' && argv[1][i] <= 'm')
+				argv[1][i] += 13; 
+			else if (argv[1][i] >= 'n' && argv[1][i] <= 'z')
+				argv[1][i] -= 13;
+			else if (argv[1][i] >= 'A' && argv[1][i] <= 'M')
+				argv[1][i] += 13;
+			else if (argv[1][i] >= 'N' && argv[1][i] <= 'Z')
+				argv[1][i] -= 13;
+			write(1, &argv[1][i], 1);
 			i++;
 		}
-		s[i] = '\0';
-		return (s);
 	}
-}
-
-int	main()
-{
-	char s[] = "This is a test.";
-
-	printf("%s", ft_strdup(s));
+	write(1, "\n", 1);
 	return (0);
 }
